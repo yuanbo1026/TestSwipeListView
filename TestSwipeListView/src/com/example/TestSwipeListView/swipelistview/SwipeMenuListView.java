@@ -1,7 +1,6 @@
 package com.example.TestSwipeListView.swipelistview;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -58,36 +57,28 @@ public class SwipeMenuListView extends ListView {
 
 	@Override
 	public void setAdapter(ListAdapter adapter) {
-//		super.setAdapter(new SwipeMenuAdapter(getContext(), adapter) {
-////			@Override
-////			public void createMenu(SwipeMenu menu) {
-////				if (mMenuCreator != null) {
-////					mMenuCreator.create(menu);
-////				}
-////			}
-//
-//			@Override
-//			public void onItemClick(SwipeMenuView view, SwipeMenu menu,
-//									int index) {
-//				boolean flag = false;
-//				if (mOnMenuItemClickListener != null) {
-//					flag = mOnMenuItemClickListener.onMenuItemClick(
-//							view.getPosition(), menu, index);
-//				}
-//				if (mTouchView != null && !flag) {
-//					mTouchView.smoothCloseMenu();
-//				}
-//			}
-//
-//		});
-		super.setAdapter(adapter);
-		adapter.registerDataSetObserver(new DataSetObserver() {
-			@Override
-			public void onChanged() {
-				super.onChanged();
-			}
-		});
+		super.setAdapter(new SwipeMenuAdapter(getContext(), adapter) {
+			/*@Override
+			public void createMenu(SwipeMenu menu) {
+				if (mMenuCreator != null) {
+					mMenuCreator.create(menu);
+				}
+			}*/
 
+			@Override
+			public void onItemClick(SwipeMenuView view, SwipeMenu menu,
+									int index) {
+				boolean flag = false;
+				if (mOnMenuItemClickListener != null) {
+					flag = mOnMenuItemClickListener.onMenuItemClick(
+							view.getPosition(),view, menu, index);
+				}
+				if (mTouchView != null && !flag) {
+					mTouchView.smoothCloseMenu();
+				}
+			}
+
+		});
 	}
 
 	public void setCloseInterpolator(Interpolator interpolator) {
@@ -248,7 +239,8 @@ public class SwipeMenuListView extends ListView {
 	}
 
 	public static interface OnMenuItemClickListener {
-		boolean onMenuItemClick(int position, SwipeMenu menu, int index);
+		boolean onMenuItemClick(int position,SwipeMenuView menuView, SwipeMenu menu,
+								int index);
 	}
 
 	public static interface OnSwipeListener {

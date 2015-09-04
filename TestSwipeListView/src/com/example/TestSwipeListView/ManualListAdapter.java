@@ -36,6 +36,7 @@ public class ManualListAdapter extends ArrayAdapter<String> {
 		View v = convertView;
 		if (v == null) {
 			v = mInflater.inflate(mLayoutId, parent, false);
+			v.setBackgroundResource(R.color.RadiothekBlueLight);
 			item = new Item();
 			item.manualName = (TextView) v.findViewById(R.id.manual_listview_item_size);
 			item.manualName.setText(mStringList.get(position));

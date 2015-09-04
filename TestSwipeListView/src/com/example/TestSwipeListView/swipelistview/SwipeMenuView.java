@@ -31,7 +31,7 @@ public class SwipeMenuView extends LinearLayout implements OnClickListener {
 		mListView = listView;
 		mMenu = menu;
 		List<SwipeMenuItem> items = menu.getMenuItems();
-		int id = 0;
+		int id = 50000;
 		for (SwipeMenuItem item : items) {
 			addItem(item, id++);
 		}
@@ -47,6 +47,7 @@ public class SwipeMenuView extends LinearLayout implements OnClickListener {
 		parent.setLayoutParams(params);
 		parent.setBackgroundDrawable(item.getBackground());
 		parent.setOnClickListener(this);
+		parent.setVisibility(item.isVisiable() ? View.VISIBLE : View.GONE);
 		addView(parent);
 
 		if (item.getIcon() != null) {
@@ -60,13 +61,8 @@ public class SwipeMenuView extends LinearLayout implements OnClickListener {
 
 	private ImageView createIcon(SwipeMenuItem item) {
 		ImageView iv = new ImageView(getContext());
+		iv.setId(item.getId());
 		iv.setImageDrawable(item.getIcon());
-		iv.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				v.setBackgroundResource(android.R.color.black);
-			}
-		});
 		return iv;
 	}
 
